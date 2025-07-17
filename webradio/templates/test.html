@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radio Stream</title>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+</head>
+<body>
+    <h1>Radio Stream</h1>
+    <audio id="audio" controls autoplay></audio>
+    <script>
+        const socket = io();
+    
+        socket.on('audio', function(msg) {
+            const audioElement = document.getElementById('audio');
+    
+            // Убедитесь, что вы используете правильный MIME тип для формата
+            const audioBlob = new Blob([msg.data], { type: type="audio/x-wav;codec=pcm" }); 
+            const audioUrl = URL.createObjectURL(audioBlob);
+    
+            audioElement.src = audioUrl;
+    
+            audioElement.play().catch(error => {
+                console.error('Ошибка воспроизведения:', error);
+            });
+        });
+    </script>
+    
+</body>
+</html>
